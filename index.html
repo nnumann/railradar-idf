@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RailRadar IDF</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#10151d;color:#fff;font-family:Arial,sans-serif}
+header{padding:18px 22px;background:#171f2b;border-bottom:1px solid #293548}
+h1{margin:0;font-size:25px;color:#55c8ff}
+header p{margin:6px 0 0;color:#aebdce;font-size:13px}
+#status{padding:12px 18px;background:#332b16;color:#ffdc82;font-size:13px}
+main{display:flex;min-height:75vh}
+aside{width:230px;padding:18px;background:#171f2b}
+aside h2{font-size:15px}
+label{display:block;padding:9px 0;color:#d8e3ef}
+input{accent-color:#39bdf5}
+#map{height:75vh;flex:1;background:#202a36}
+footer{padding:15px;color:#9baabd;font-size:12px;text-align:center}
+@media(max-width:650px){
+main{flex-direction:column}
+aside{width:100%}
+#map{height:65vh}
+}
+</style>
+</head>
+<body>
+<header>
+<h1>🚆 RailRadar IDF</h1>
+<p>Le réseau ferroviaire d'Île-de-France en un seul regard</p>
+</header>
+<div id="status">⚠️ Positions GPS réelles non connectées. Aucune position de train n'est affichée pour le moment.</div>
+<main>
+<aside>
+<h2>Réseaux</h2>
+<div id="lines"></div>
+</aside>
+<div id="map"></div>
+</main>
+<footer>RailRadar IDF · Projet indépendant · Les positions GPS nécessitent une source officielle autorisée.</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const map=L.map('map').setView([48.8566,2.3522],10);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
+attribution:'&copy; OpenStreetMap &copy; CARTO'
+}).addTo(map);
+const names=['RER A','RER B','RER C','RER D','RER E','Transilien H','Transilien J','Transilien K','Transilien L','Transilien N','Transilien P','Transilien R','Transilien U'];
+const panel=document.getElementById('lines');
+names.forEach(name=>{
+const label=document.createElement('label');
+const input=document.createElement('input');
+input.type='checkbox';
+input.checked=true;
+input.disabled=true;
+label.append(input,' ',name);
+panel.append(label);
+});
+</script>
+</body>
+</html>
